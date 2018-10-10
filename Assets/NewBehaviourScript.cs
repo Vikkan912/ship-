@@ -4,37 +4,43 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    [Range(0, 1000)]
+    [Range(0, 10000)]
     public float rot;
     public SpriteRenderer rend;
     public Color sColor;
     public float timer;
-    public int speed = 20;
+    public float speed;
     public int x;
-    [Range(0, 70)]
-    public int right;
+    [Range(0, 7000)]
+    public float right;
     public int newColor;
-    public float ett;
+    float ett;
     float två;
     float tre;
-    
+
 
     // Use this for initialization
     void Start()
     {
+        speed = Random.Range(800, 1000);
+        //när man börjar spelet så sätter den in en random speed. ( inte rot.) Vet inte om man ska göra det.
 
+        speed *= Time.deltaTime;
+        rot *= Time.deltaTime;
+        right *= Time.deltaTime;
+        //jag gångrar in  Time.delta så att den är inte beroende av framerate längre. och åker lika långt oavsett frames.
+
+        transform.Translate(Random.Range(-34, 34), Random.Range(-16, 14), 0);
+        //trans.Translate gör så att den spawnar på ett ställe. Random.Range är där för att man ska spawna på ett random ställe
+        // nollan är där för att den inte ska gå på y axeln. För då kan den hamna bakom skärmen.    
     }
-
+ 
     // Update is called once per frame
     void Update()
     {
-        
-        
-
-        
+    
         if (Input.GetKey(KeyCode.D))
         {
-
             rend.color = new Color(0f, 0f, 1f);
             //det här gör så att så fort man trycker på D så ändras färgen till helblå
 
@@ -49,9 +55,9 @@ public class NewBehaviourScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             rend.color = new Color(0f, 1f, 0f);
-
+            //färgen blir grön. Och gör att den blirdet.
             transform.Rotate(0f, 0f, right * Time.deltaTime);
-            //rot(+) gör så att den åker åt andra hållet.
+            //Right(+) gör så att den åker åt andra hållet.
             //jag har right här för att den ska inte åka lika snabbt som rot
             transform.Translate(5f * Time.deltaTime, 0, 0, Space.Self);
         }
@@ -61,12 +67,14 @@ public class NewBehaviourScript : MonoBehaviour
             //den gör så att snabbheten på rot halveras 
             speed /= 2;
             //speed är hur snabbt den åker utan att hålla ner något. och den delas på hälften.
-
+            right /= 2;
+            
         }
         if (Input.GetKeyUp(KeyCode.S))
         {
             rot *= 2;
             speed *= 2;
+            right *= 2;
             //gör så att allt kommer tillbaka när man släpper S.
         }
         transform.Translate(speed * Time.deltaTime, 0, 0, Space.Self);
@@ -78,16 +86,16 @@ public class NewBehaviourScript : MonoBehaviour
             x = x + 1;
             //varje gång X blir större än timern så plusas det föra talet med ett 
             print("timer: " + x);
-            //att man ser timern i konsolen.
+            //att man ser timern i konsolen.(printar ut det.)
         }
         //C nivå.
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rend.color = new Color(ett, två, tre);
             ett = Random.Range(0f, 1f);
-            två = Random.Range(0f, 1f);
+            två = Random.Range(0f, 1f); 
             tre = Random.Range(0f, 1f);
-            //så.. jag vet inte om jag har gjort rät. men vad som händer är att varje gång du trycker space
+            //så.. jag vet inte om jag har gjort rätt. men vad som händer är att varje gång du trycker space
             //så får ett, två och tre ett nytt värde. Det gör så att varje gång du trycker space får du en ny färg.
             //det jag inte förstår är om den ska alltid vara synlig. eller den ska bara finnas där om man inte trycker ner A eller D.
             //annars så gör man ett nytt script och lägger det på en annan del på skeppet(kolla part1 (1)).
