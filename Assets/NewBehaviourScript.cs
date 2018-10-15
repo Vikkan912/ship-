@@ -11,7 +11,7 @@ public class NewBehaviourScript : MonoBehaviour
     public float timer;
     public float speed;
     public int x;
-    [Range(0, 7000)]
+    [Range(0, 5000)]
     public float right;
     public int newColor;
     float ett;
@@ -23,24 +23,24 @@ public class NewBehaviourScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        speed = Random.Range(800, 1000);
+        speed = Random.Range(650, 1000);
         //när man börjar spelet så sätter den in en random speed. ( inte rot.) Vet inte om man ska göra det.
+
+        transform.Translate(Random.Range(-18, 14), Random.Range(-18, 21), 0);
+        //trans.Translate gör så att den spawnar på ett ställe. Random.Range är där för att man ska spawna på ett random ställe
+        // nollan är där för att den inte ska gå på y axeln. För då kan den hamna bakom skärmen.   
 
         speed *= Time.deltaTime;
         rot *= Time.deltaTime;
         right *= Time.deltaTime;
         //jag gångrar in  Time.delta så att den är inte beroende av framerate längre. och åker lika långt oavsett frames.
 
-        transform.Translate(Random.Range(-18, 14), Random.Range(-18, 21), 0);
-        //trans.Translate gör så att den spawnar på ett ställe. Random.Range är där för att man ska spawna på ett random ställe
-        // nollan är där för att den inte ska gå på y axeln. För då kan den hamna bakom skärmen.   
-
-        //Y = 23,1. -24,9  X=43,7. -38.7
     }
 
     // Update is called once per frame
     void Update()
     {
+       
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -137,7 +137,13 @@ public class NewBehaviourScript : MonoBehaviour
                 transform.position.z);
 
         }
-        
+
+        speed += 1* Time.deltaTime;
+        right += 0.1f* Time.deltaTime;
+        rot += 0.1f * Time.deltaTime;
+        // alla dem här gör så att varje sekund så plusas speed eller rot på med 1 eller 0.1. det gör så att den blir snabbare och snabbare det mer du spelar.
+
+
     }
 }
 
